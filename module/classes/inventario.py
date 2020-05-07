@@ -1,5 +1,6 @@
 import json
 from  config.database import MongoDB
+from pprint import pprint
 
 class Inventario(object):
 
@@ -9,6 +10,8 @@ class Inventario(object):
     """docstring for Inventario."""
     def __init__(self):
         super(Inventario, self).__init__()
+        self.client = MongoDB()._db.productos
+
 
     def add_product(self, nombre, categoria, subcategoria, precio, cantidad):
 
@@ -20,8 +23,46 @@ class Inventario(object):
             "cantidad": cantidad
         }
 
-        client = MongoDB()._db.productos
+        if self.client.find({"nombre": nombre}).count() == 0:
+            insert = self.client.insert_one(new_product)
+            print("producto " + new_product["nombre"]+ " añadido correctamente!")
+            return new_product
+        else:
+            print("producto " + new_product["nombre"]+ " ya esta registrado!")
 
-        insert = client.insert_one(new_product)
-        print("producto " + new_product["nombre"]+ " añadido correctamente!")
-        return new_product
+
+    def find_product_by_name(self, nombre):
+
+        myfind = self.client.find_one({"nombre": nombre})
+
+        if self.client.find({"nombre": nombre}).count() > 0:
+            return pprint(myfind)
+        else:
+            return print("No existe el producto " + nombre)
+
+
+    def find_all(self):
+
+        for product in self.client.find():
+            pprint(product)
+
+
+    def update_product(self, nombre, categoria, subcategoria, precio, cantidad):
+
+        update_product = {
+            "nombre": nombre,
+            "categoria": categoria,
+            "subcategoria": subcategoria,
+            "precio": precio,
+            "cantidad": cantidad
+        }
+
+        update = self.client.find_one_and_update(
+            {"nombre" : nombre },
+            {"$set": update_product},upsert=True
+        )
+
+
+    def delete_product(self, nombre):
+
+        remove = self.client.delete_one({"nombre": nombre})
