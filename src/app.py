@@ -1,29 +1,123 @@
-from config.database import MongoDB
-from classes.inventario import Inventario
+from tkinter import *
+import tkinter.messagebox
+from tkinter import ttk
 
-if __name__ == '__main__':
-    # you want to initialize the class
-    database   = MongoDB()
-    collection = database.createCollection("productos")
-    myinventario = Inventario()
+class MainApplication:
+    def __init__(self, master):
+        self.master = master
+        self.master.title("Terranova | LOGIN")
+        self.master.geometry('1350x750+0+0')
+        self.frame = Frame(self.master)
+        self.frame.pack()
 
-    print("------ añadir producto ------")
-    articulo1 = myinventario.add_product("cocacola", "Bebida", "Refresco", 10, 1)
-
-    print("------ buscar producto ------")
-    buscar = myinventario.find_product_by_name("Cocacola")
-
-    print("------ buscar todos los producto ------")
-    buscar_todo = myinventario.find_all()
+        self.username = StringVar()
+        self.password = StringVar()
 
 
-    mod_articulo1 = myinventario.update_product("Cocacola", "Bebida", "Refresco", 10, 50)
+        self.LabelTitle = Label(self.frame, text = "Terranova Gestión",
+                                font = ('arial', 50, 'bold'), bd=20)
+        self.LabelTitle.grid(row = 0, column = 0, columnspan = 2, pady = 20)
 
-    print("------ buscar producto modificado ------")
-    buscar = myinventario.find_product_by_name("Cocacola")
+        self.LoginFrame1 = Frame(self.frame, width=1010, height=300, bd = 20,
+                                relief='ridge')
+        self.LoginFrame1.grid(row=1, column=0)
+        self.LoginFrame2 = Frame(self.frame, width=1000, height=100, bd = 20,
+                                relief='ridge')
+        self.LoginFrame2.grid(row=2, column=0)
 
-    print("------ eliminiar producto ------")
-    buscar = myinventario.delete_product("cocacola")
+        ######################## TEXT LOGIN #################################
 
-    print("------ buscar producto eliminado ------")
-    buscar = myinventario.find_product_by_name("cocacola")
+        self.LblUsername = Label(self.LoginFrame1, text = "Username",
+                                font = ('arial', 30, 'bold'), bd=22)
+        self.LblUsername.grid(row = 0, column = 0)
+        self.TxtUsername = Entry(self.LoginFrame1, text = "Username",
+                    font = ('arial', 30, 'bold'), bd=22, textvariable=self.username)
+        self.TxtUsername.grid(row = 0, column = 1)
+
+
+        self.LblPassword = Label(self.LoginFrame1, text = "Password",
+                                font = ('arial', 30, 'bold'), bd=22)
+        self.LblPassword.grid(row = 1, column = 0)
+        self.TxtPassword = Entry(self.LoginFrame1, text = "Password",
+                    font = ('arial', 30, 'bold'), bd=22, textvariable=self.password)
+        self.TxtPassword.grid(row = 1, column = 1, padx = 85)
+
+        ######################## BOTONES LOGIN #################################
+
+        self.btnLogin = Button(self.LoginFrame2, text = "Login", width = 17,
+                        font =('arial', 20, 'bold'), command = self.login_system)
+        self.btnLogin.grid(row = 0, column = 0)
+
+        self.btnReset = Button(self.LoginFrame2, text = "Reset", width = 17,
+                        font =('arial', 20, 'bold'), command = self.reset)
+        self.btnReset.grid(row = 0, column = 1)
+
+        self.btnExit = Button(self.LoginFrame2, text = "Exit", width = 17,
+                        font =('arial', 20, 'bold'), command = self.exit_system)
+        self.btnExit.grid(row = 0, column = 2)
+
+
+        ######################## LOGIN ########################################
+
+    def login_system(self):
+        user = (self.username.get())
+        passwd = (self.password.get())
+
+        if (user == str(1234)) and (passwd == str(1234)):
+            self.new_window = Toplevel(self.master)
+            self.app = principal(self.new_window)
+        else:
+            tkinter.messagebox.askyesno("Terranova sistema de gestión",
+                "Usuario/contraseña incorrecta")
+            self.username.set("")
+            self.password.set("")
+            self.TxtUsername.focus()
+
+    def reset():
+        self.username.set("")
+        self.password.set("")
+        self.TxtUsername.focus()
+
+    def exit_system(self):
+        self.exit_system = tkinter.messagebox.askyesno("Terranova sistema de gestión",
+            "De verdad quieres cerrar el programa")
+
+        if self.exit_system > 0:
+            self.master.destroy()
+            return
+        else:
+            pass
+
+        ######################## BOTONES ########################################
+
+class principal:
+    def __init__(self, master):
+        self.master = master
+        self.master.title("Terranova | Gestion")
+        self.master.geometry('1350x750+0+0')
+        self.frame = Frame(self.master)
+        self.frame.pack()
+
+        #######################################################################
+
+        self.btnInventario = Button(self.frame, text = "Inventario",
+                                    command = self.inventory_window)
+        self.btnInventario.grid(row = 0, column = 0)
+
+    def inventory_window(self):
+        self.new_window = Toplevel(self.master)
+        self.app = Invetario(self.new_window)
+        #######################################################################
+
+class Invetario:
+    def __init__(self, master):
+        self.master = master
+        self.master.title("Terranova | Inventario")
+        self.master.geometry('1350x750+0+0')
+        self.frame = Frame(self.master)
+        self.frame.pack()
+
+
+root = Tk()
+app = MainApplication(root)
+root.mainloop()
