@@ -1,4 +1,3 @@
-import json
 from  config.database import MongoDB
 from pprint import pprint
 

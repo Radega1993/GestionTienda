@@ -2,6 +2,8 @@ from tkinter import *
 import tkinter.messagebox
 from tkinter import ttk
 
+from  classes.login import Login
+
 class MainApplication:
     def __init__(self, master):
         self.master = master
@@ -63,7 +65,10 @@ class MainApplication:
         user = (self.username.get())
         passwd = (self.password.get())
 
-        if (user == str(1234)) and (passwd == str(1234)):
+        user_find = Login().get_user(user)
+        passw_find = Login().get_password(passwd)
+
+        if (user ==  user_find) and (passwd == passw_find):
             self.new_window = Toplevel(self.master)
             self.app = principal(self.new_window)
         else:
