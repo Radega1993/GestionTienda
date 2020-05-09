@@ -40,7 +40,7 @@ class MainApplication:
         self.LblPassword = Label(self.LoginFrame1, text = "Password",
                                 font = ('arial', 30, 'bold'), bd=22)
         self.LblPassword.grid(row = 1, column = 0)
-        self.TxtPassword = Entry(self.LoginFrame1, text = "Password",
+        self.TxtPassword = Entry(self.LoginFrame1, text = "Password", show="*",
                     font = ('arial', 30, 'bold'), bd=22, textvariable=self.password)
         self.TxtPassword.grid(row = 1, column = 1, padx = 85)
 
