@@ -72,7 +72,7 @@ class MainApplication:
             self.new_window = Toplevel(self.master)
             self.app = principal(self.new_window)
         else:
-            tkinter.messagebox.askyesno("Terranova sistema de gestión",
+            tkinter.messagebox.showinfo("Terranova sistema de gestión",
                 "Usuario/contraseña incorrecta")
             self.username.set("")
             self.password.set("")
