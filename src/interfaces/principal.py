@@ -4,7 +4,8 @@ from tkinter import ttk
 
 from  interfaces.inventario import Invetario
 
-class principal:
+
+class Principal:
     def __init__(self, master):
         self.master = master
         self.master.title("Terranova | Gestion")
