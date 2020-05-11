@@ -123,12 +123,12 @@ class AddUsuarios:
         else:
             tkinter.messagebox.showinfo("Terranova gestión de usuarios",
                 "El usuario " + user + " ya existe")
-                
+
             from interfaces.principalAdmin import PrincipalAdmin
             frame = PrincipalAdmin(self.master)
             self.frame.destroy()
 
-    def reset():
+    def reset(self):
         self.nombre.set("")
         self.apellido.set("")
         self.usuario.set("")

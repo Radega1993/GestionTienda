@@ -47,12 +47,10 @@ class PrincipalAdmin:
         frame = AddUsuarios(self.master)
         self.frame.destroy()
 
-
     def updateUsers_window(self):
-        self.new_window = Toplevel(self.master)
-        self.app = UpdateUsuarios(self.new_window)
+        frame = UpdateUsuarios(self.master)
+        self.frame.destroy()
 
     def deleteUsers_window(self):
-        self.new_window = Toplevel(self.master)
-        self.app = DeleteUsuarios(self.new_window)
-        #######################################################################
+        frame = DeleteUsuarios(self.master)
+        self.frame.destroy()

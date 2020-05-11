@@ -88,7 +88,7 @@ class MainApplication:
             self.password.set("")
             self.TxtUsername.focus()
 
-    def reset():
+    def reset(self):
         self.username.set("")
         self.password.set("")
         self.TxtUsername.focus()

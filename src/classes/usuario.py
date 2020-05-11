@@ -40,18 +40,22 @@ class Usuario(object):
 
     def find_all(self):
 
+        list_users = []
         for usuarios in self.client.find():
-            pprint(usuarios)
+            if usuarios['usuario'] != 'admin':
+                list_users.append(usuarios)
+
+        return list_users
 
 
-    def update_user(self, nombre, apellido, usuario, role, cargo, password):
+    def update_user(self, nombre, apellido, usuario, role, cargo):
 
         update_user = {
             "nombre": nombre,
             "apellido": apellido,
+            "usuario": usuario,
             "role": role,
-            "cargo": cargo,
-            "password": password
+            "cargo": cargo
         }
 
         update = self.client.find_one_and_update(
@@ -59,7 +63,13 @@ class Usuario(object):
             {"$set": update_user},upsert=True
         )
 
+    def update_user_password(self, usuario, password):
 
-    def delete_product(self, usuario):
+        update = self.client.find_one_and_update(
+            {"usuario" : usuario },
+            {"$set": {"password": password}},upsert=True
+        )
+
+    def delete_user(self, usuario):
 
         remove = self.client.delete_one({"usuario": usuario})
