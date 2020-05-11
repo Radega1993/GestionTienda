@@ -2,7 +2,7 @@ from tkinter import *
 import tkinter.messagebox
 from tkinter import ttk
 
-from interfaces.principalAdmin import *
+from classes.usuario import Usuario
 
 
 class AddUsuarios:
@@ -102,28 +102,32 @@ class AddUsuarios:
         ######################## LOGIN ########################################
 
     def crear_usuario(self):
-        pass
-        '''
-        user = (self.username.get())
+
+        name = (self.nombre.get())
+        surname = (self.apellido.get())
+        user = (self.usuario.get())
+        role = (self.role.get())
+        cargo = (self.cargo.get())
         passwd = (self.password.get())
 
-        user_find = Login().get_user(user)
-        passw_find = Login().get_password(passwd)
+        user_find = Usuario().find_by_username(user)
 
-        if (user ==  user_find) and (passwd == passw_find):
-            if (user == 'admin'):
-                self.new_window = Toplevel(self.master)
-                self.app = principalAdmin(self.new_window)
-            else:
-                self.new_window = Toplevel(self.master)
-                self.app = principal(self.new_window)
+        if (user_find == None):
+            insert = Usuario().add_usuario(name, surname, user, role, cargo, passwd)
+            tkinter.messagebox.showinfo("Terranova gestión de usuarios",
+                "El usuario " + user + " añadido correctamente!")
+
+            from interfaces.principalAdmin import PrincipalAdmin
+            frame = PrincipalAdmin(self.master)
+            self.frame.destroy()
         else:
-            tkinter.messagebox.showinfo("Terranova sistema de gestión",
-                "Usuario/contraseña incorrecta")
-            self.username.set("")
-            self.password.set("")
-            self.TxtUsername.focus()
-        '''
+            tkinter.messagebox.showinfo("Terranova gestión de usuarios",
+                "El usuario " + user + " ya existe")
+                
+            from interfaces.principalAdmin import PrincipalAdmin
+            frame = PrincipalAdmin(self.master)
+            self.frame.destroy()
+
     def reset():
         self.nombre.set("")
         self.apellido.set("")
@@ -134,5 +138,6 @@ class AddUsuarios:
         self.TxtNombre.focus()
 
     def back_system(self):
-        self.new_window = Toplevel(self.master)
-        self.app = PrincipalAdmin(self.new_window)
+        from interfaces.principalAdmin import PrincipalAdmin
+        frame = PrincipalAdmin(self.master)
+        self.frame.destroy()

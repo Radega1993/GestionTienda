@@ -3,8 +3,9 @@ import tkinter.messagebox
 from tkinter import ttk
 
 from classes.login import Login
+from interfaces.principalAdmin import PrincipalAdmin
 from interfaces.principal import Principal
-from interfaces.principalAdmin import *
+
 
 
 class MainApplication:
@@ -73,11 +74,13 @@ class MainApplication:
 
         if (user ==  user_find) and (passwd == passw_find):
             if (user == 'admin'):
-                self.new_window = Toplevel(self.master)
-                self.app = PrincipalAdmin(self.new_window)
+                #self.new_window = Toplevel(self.master)
+                #self.app = PrincipalAdmin(self.new_window)
+                frame = PrincipalAdmin(self.master)
+                self.frame.destroy()
             else:
-                self.new_window = Toplevel(self.master)
-                self.app = Principal(self.new_window)
+                frame = Principal(self.master)
+                self.frame.destroy()
         else:
             tkinter.messagebox.showinfo("Terranova sistema de gestión",
                 "Usuario/contraseña incorrecta")

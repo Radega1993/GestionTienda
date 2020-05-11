@@ -22,20 +22,20 @@ class Usuario(object):
 
         if self.client.find({"usuario": usuario}).count() == 0:
             insert = self.client.insert_one(new_user)
-            print("producto " + new_user["usuario"]+ " añadido correctamente!")
+            print("El usuario " + new_user["usuario"]+ " añadido correctamente!")
             return new_user
         else:
             print("El usuario " + new_user["usuario"]+ " ya esta registrado!")
 
 
-    def find_product_by_username(self, usuario):
+    def find_by_username(self, usuario):
 
         myfind = self.client.find_one({"usuario": usuario})
 
         if self.client.find({"usuario": usuario}).count() > 0:
-            return pprint(myfind)
+            return myfind
         else:
-            return print("No existe el usuario " + usuario)
+            return None
 
 
     def find_all(self):

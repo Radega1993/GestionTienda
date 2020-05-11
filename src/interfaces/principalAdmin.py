@@ -44,8 +44,9 @@ class PrincipalAdmin:
 
 
     def addUsers_window(self):
-        self.new_window = Toplevel(self.master)
-        self.app = AddUsuarios(self.new_window)
+        frame = AddUsuarios(self.master)
+        self.frame.destroy()
+
 
     def updateUsers_window(self):
         self.new_window = Toplevel(self.master)
