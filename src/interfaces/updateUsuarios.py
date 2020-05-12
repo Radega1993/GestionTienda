@@ -28,19 +28,19 @@ class UpdateUsuarios:
                                 font = ('arial', 50, 'bold'), bd=20)
         self.LabelTitle.grid(row = 0, column = 0, columnspan = 2, pady = 20)
 
-        self.LoginFrame1 = Frame(self.frame, width=1010, height=300, bd = 20,
+        self.FormFrame1 = Frame(self.frame, width=1010, height=300, bd = 20,
                                 relief='ridge')
-        self.LoginFrame1.grid(row=1, column=0)
-        self.LoginFrame2 = Frame(self.frame, width=1000, height=100, bd = 20,
+        self.FormFrame1.grid(row=1, column=0)
+        self.FormFrame2 = Frame(self.frame, width=1000, height=100, bd = 20,
                                 relief='ridge')
-        self.LoginFrame2.grid(row=2, column=0)
+        self.FormFrame2.grid(row=2, column=0)
 
         ######################## TEXT LOGIN ####################################
 
-        self.LblRole = Label(self.LoginFrame1, text = "Usuario",
+        self.LblRole = Label(self.FormFrame1, text = "Usuario",
                                 font = ('arial', 20, 'bold'), bd=5)
         self.LblRole.grid(row = 0, column = 0)
-        self.comboRoleUser = ttk.Combobox(self.LoginFrame1, font = ('arial', 20, 'bold'),
+        self.comboRoleUser = ttk.Combobox(self.FormFrame1, font = ('arial', 20, 'bold'),
             textvariable=self.usuario, state = "readonly")
         self.comboRoleUser['values'] = list_users
         #self.comboRole.current(0)
@@ -48,22 +48,22 @@ class UpdateUsuarios:
         self.comboRoleUser.set("Seleciona usuario")
         self.comboRoleUser.grid(row = 0, column = 1)
 
-        self.btnGetData = ttk.Button(self.LoginFrame1,
+        self.btnGetData = ttk.Button(self.FormFrame1,
                 text="Ver datos", command = self.fill_data)
         self.btnGetData.grid(row = 0, column = 2)
 
 
         ######################### BOTONES ######################################
 
-        self.btnCrear = Button(self.LoginFrame2, text = "Modificar", width = 17,
+        self.btnCrear = Button(self.FormFrame2, text = "Modificar", width = 17,
                         font =('arial', 20, 'bold'), command = self.modificar_usuario)
         self.btnCrear.grid(row = 0, column = 0)
 
-        self.btnReset = Button(self.LoginFrame2, text = "Reset", width = 17,
+        self.btnReset = Button(self.FormFrame2, text = "Reset", width = 17,
                         font =('arial', 20, 'bold'), command = self.reset)
         self.btnReset.grid(row = 0, column = 1)
 
-        self.btnAtras = Button(self.LoginFrame2, text = "Atras", width = 17,
+        self.btnAtras = Button(self.FormFrame2, text = "Atras", width = 17,
                         font =('arial', 20, 'bold'), command = self.back_system)
         self.btnAtras.grid(row = 0, column = 2)
 
@@ -79,29 +79,29 @@ class UpdateUsuarios:
 
             user_data = Usuario().find_by_username(self.comboRoleUser.get())
 
-            self.LblNombre = Label(self.LoginFrame1, text = "Nombre",
+            self.LblNombre = Label(self.FormFrame1, text = "Nombre",
                                     font = ('arial', 20, 'bold'), bd=5)
             self.LblNombre.grid(row = 1, column = 0)
-            self.TxtNombre = Entry(self.LoginFrame1, text = "Nombre",
+            self.TxtNombre = Entry(self.FormFrame1, text = "Nombre",
                         font = ('arial', 20, 'bold'), bd=5, textvariable=self.nombre)
             self.TxtNombre.insert(END, user_data.get("nombre"))
             self.TxtNombre.grid(row = 1, column = 1)
 
 
 
-            self.LblApellido = Label(self.LoginFrame1, text = "Apellido",
+            self.LblApellido = Label(self.FormFrame1, text = "Apellido",
                                     font = ('arial', 20, 'bold'), bd=5)
             self.LblApellido.grid(row = 2, column = 0)
-            self.TxtApellido = Entry(self.LoginFrame1, text = "Apellido",
+            self.TxtApellido = Entry(self.FormFrame1, text = "Apellido",
                         font = ('arial', 20, 'bold'), bd=5, textvariable=self.apellido)
             self.TxtApellido.insert(END, user_data.get("apellido"))
             self.TxtApellido.grid(row = 2, column = 1)
 
 
-            self.LblRole = Label(self.LoginFrame1, text = "Role",
+            self.LblRole = Label(self.FormFrame1, text = "Role",
                                     font = ('arial', 20, 'bold'), bd=5)
             self.LblRole.grid(row = 3, column = 0)
-            self.comboRole = ttk.Combobox(self.LoginFrame1, font = ('arial', 20, 'bold'),
+            self.comboRole = ttk.Combobox(self.FormFrame1, font = ('arial', 20, 'bold'),
                 textvariable=self.role, state = "readonly")
             self.comboRole['values']= ("USER_ROLE", "ADMIN_ROLE")
             self.comboRole.current(0)
@@ -109,10 +109,10 @@ class UpdateUsuarios:
             self.comboRole.grid(row = 3, column = 1)
 
 
-            self.LblCargo = Label(self.LoginFrame1, text = "Cargo",
+            self.LblCargo = Label(self.FormFrame1, text = "Cargo",
                                     font = ('arial', 20, 'bold'), bd=5)
             self.LblCargo.grid(row = 4, column = 0)
-            self.TxtCargo = Entry(self.LoginFrame1, text = "Cargo",
+            self.TxtCargo = Entry(self.FormFrame1, text = "Cargo",
                         font = ('arial', 20, 'bold'), bd=5, textvariable=self.cargo)
             self.TxtCargo.insert(END, user_data.get("cargo"))
             self.TxtCargo.grid(row = 4, column = 1)
