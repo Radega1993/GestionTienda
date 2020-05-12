@@ -11,7 +11,9 @@ class PrincipalAdmin:
     def __init__(self, master):
         self.master = master
         self.master.title("Terranova | Administrador")
-        self.master.geometry('1350x750+0+0')
+        width_value = self.master.winfo_screenwidth()
+        height_value = self.master.winfo_screenheight()
+        self.master.geometry("%dx%d+0+0" % (width_value, height_value))
         self.frame = Frame(self.master)
         self.frame.pack()
 
@@ -23,6 +25,9 @@ class PrincipalAdmin:
                                 relief='ridge')
         self.GestionUsauriosFrame.grid(row=2, column=0)
 
+        self.LogoutFrame = Frame(self.frame, width=1000, height=100, bd = 20,
+                                relief='ridge')
+        self.LogoutFrame.grid(row=3, column=0)
         #######################################################################
 
         self.LblUsuario = Label(self.GestionUsauriosFrame, text = "Gestion usuarios",
@@ -41,7 +46,9 @@ class PrincipalAdmin:
                 width = 17, font =('arial', 20, 'bold'), command = self.deleteUsers_window)
         self.btnDeleteUsers.grid(row = 0, column = 3, padx = 10)
 
-
+        self.btnAddUsers = Button(self.LogoutFrame, text = "Logout",
+                width = 17, font =('arial', 20, 'bold'), command = self.logout_system)
+        self.btnAddUsers.grid(row = 0, column = 0, padx = 10)
 
     def addUsers_window(self):
         frame = AddUsuarios(self.master)
@@ -54,3 +61,14 @@ class PrincipalAdmin:
     def deleteUsers_window(self):
         frame = DeleteUsuarios(self.master)
         self.frame.destroy()
+
+    def logout_system(self):
+        self.logout_system = tkinter.messagebox.askyesno("Terranova logout",
+            "De verdad quieres cerrar la session?")
+
+        if self.logout_system > 0:
+            from interfaces.mainapplication import MainApplication
+            frame = MainApplication(self.master)
+            self.frame.destroy()
+        else:
+            pass

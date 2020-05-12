@@ -9,7 +9,9 @@ class AddUsuarios:
     def __init__(self, master):
         self.master = master
         self.master.title("Terranova | Añadir Usuario")
-        self.master.geometry('1350x750+0+0')
+        width_value = self.master.winfo_screenwidth()
+        height_value = self.master.winfo_screenheight()
+        self.master.geometry("%dx%d+0+0" % (width_value, height_value))
         self.frame = Frame(self.master)
         self.frame.pack()
 
