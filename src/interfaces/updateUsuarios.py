@@ -22,6 +22,7 @@ class UpdateUsuarios:
         self.apellido = StringVar()
         self.role = StringVar()
         self.cargo = StringVar()
+        self.current =  StringVar()
 
         self.LabelTitle = Label(self.frame, text = "Crear Usuario",
                                 font = ('arial', 50, 'bold'), bd=20)
@@ -39,44 +40,17 @@ class UpdateUsuarios:
         self.LblRole = Label(self.LoginFrame1, text = "Usuario",
                                 font = ('arial', 20, 'bold'), bd=5)
         self.LblRole.grid(row = 0, column = 0)
-        self.comboRole = ttk.Combobox(self.LoginFrame1, font = ('arial', 20, 'bold'),
+        self.comboRoleUser = ttk.Combobox(self.LoginFrame1, font = ('arial', 20, 'bold'),
             textvariable=self.usuario, state = "readonly")
-        self.comboRole['values'] = list_users
-        self.comboRole.current(0)
-        self.comboRole.grid(row = 0, column = 1)
+        self.comboRoleUser['values'] = list_users
+        #self.comboRole.current(0)
+        #self.comboRole.bind("<<ComboboxSelected>>", self.fill_data(self.comboRole.get()))
+        self.comboRoleUser.set("Seleciona usuario")
+        self.comboRoleUser.grid(row = 0, column = 1)
 
-        self.LblNombre = Label(self.LoginFrame1, text = "Nombre",
-                                font = ('arial', 20, 'bold'), bd=5)
-        self.LblNombre.grid(row = 1, column = 0)
-        self.TxtNombre = Entry(self.LoginFrame1, text = "Nombre",
-                    font = ('arial', 20, 'bold'), bd=5, textvariable=self.nombre)
-        self.TxtNombre.grid(row = 1, column = 1)
-
-
-        self.LblApellido = Label(self.LoginFrame1, text = "Apellido",
-                                font = ('arial', 20, 'bold'), bd=5)
-        self.LblApellido.grid(row = 2, column = 0)
-        self.TxtApellido = Entry(self.LoginFrame1, text = "Apellido",
-                    font = ('arial', 20, 'bold'), bd=5, textvariable=self.apellido)
-        self.TxtApellido.grid(row = 2, column = 1)
-
-
-        self.LblRole = Label(self.LoginFrame1, text = "Role",
-                                font = ('arial', 20, 'bold'), bd=5)
-        self.LblRole.grid(row = 3, column = 0)
-        self.comboRole = ttk.Combobox(self.LoginFrame1, font = ('arial', 20, 'bold'),
-            textvariable=self.role, state = "readonly")
-        self.comboRole['values']= ("USER_ROLE", "ADMIN_ROLE")
-        self.comboRole.current(0)
-        self.comboRole.grid(row = 3, column = 1)
-
-
-        self.LblCargo = Label(self.LoginFrame1, text = "Cargo",
-                                font = ('arial', 20, 'bold'), bd=5)
-        self.LblCargo.grid(row = 4, column = 0)
-        self.TxtCargo = Entry(self.LoginFrame1, text = "Cargo",
-                    font = ('arial', 20, 'bold'), bd=5, textvariable=self.cargo)
-        self.TxtCargo.grid(row = 4, column = 1)
+        self.btnGetData = ttk.Button(self.LoginFrame1,
+                text="Ver datos", command = self.fill_data)
+        self.btnGetData.grid(row = 0, column = 2)
 
 
         ######################### BOTONES ######################################
@@ -94,9 +68,57 @@ class UpdateUsuarios:
         self.btnAtras.grid(row = 0, column = 2)
 
         ######################## LOGIN ########################################
+    def fill_data(self):
+
+        if self.comboRoleUser.get() != "Seleciona usuario":
+            self.nombre.set("")
+            self.apellido.set("")
+            self.role.set("USER_ROLE")
+            self.cargo.set("")
+            self.current = self.comboRoleUser.get()
+
+            user_data = Usuario().find_by_username(self.comboRoleUser.get())
+
+            self.LblNombre = Label(self.LoginFrame1, text = "Nombre",
+                                    font = ('arial', 20, 'bold'), bd=5)
+            self.LblNombre.grid(row = 1, column = 0)
+            self.TxtNombre = Entry(self.LoginFrame1, text = "Nombre",
+                        font = ('arial', 20, 'bold'), bd=5, textvariable=self.nombre)
+            self.TxtNombre.insert(END, user_data.get("nombre"))
+            self.TxtNombre.grid(row = 1, column = 1)
+
+
+
+            self.LblApellido = Label(self.LoginFrame1, text = "Apellido",
+                                    font = ('arial', 20, 'bold'), bd=5)
+            self.LblApellido.grid(row = 2, column = 0)
+            self.TxtApellido = Entry(self.LoginFrame1, text = "Apellido",
+                        font = ('arial', 20, 'bold'), bd=5, textvariable=self.apellido)
+            self.TxtApellido.insert(END, user_data.get("apellido"))
+            self.TxtApellido.grid(row = 2, column = 1)
+
+
+            self.LblRole = Label(self.LoginFrame1, text = "Role",
+                                    font = ('arial', 20, 'bold'), bd=5)
+            self.LblRole.grid(row = 3, column = 0)
+            self.comboRole = ttk.Combobox(self.LoginFrame1, font = ('arial', 20, 'bold'),
+                textvariable=self.role, state = "readonly")
+            self.comboRole['values']= ("USER_ROLE", "ADMIN_ROLE")
+            self.comboRole.current(0)
+            self.comboRole.set(user_data.get("role"))
+            self.comboRole.grid(row = 3, column = 1)
+
+
+            self.LblCargo = Label(self.LoginFrame1, text = "Cargo",
+                                    font = ('arial', 20, 'bold'), bd=5)
+            self.LblCargo.grid(row = 4, column = 0)
+            self.TxtCargo = Entry(self.LoginFrame1, text = "Cargo",
+                        font = ('arial', 20, 'bold'), bd=5, textvariable=self.cargo)
+            self.TxtCargo.insert(END, user_data.get("cargo"))
+            self.TxtCargo.grid(row = 4, column = 1)
+
 
     def modificar_usuario(self):
-
 
         name = (self.nombre.get())
         surname = (self.apellido.get())
@@ -104,24 +126,31 @@ class UpdateUsuarios:
         role = (self.role.get())
         cargo = (self.cargo.get())
 
-        user_find = Usuario().find_by_username(user)
+        if user == self.current:
+            if (
+                user != "Seleciona usuario" and name != ""
+                and surname != "" and cargo != ""
+            ):
+                insert = Usuario().update_user(name, surname, user, role, cargo)
+                tkinter.messagebox.showinfo("Terranova gestión de usuarios",
+                    "El usuario " + user + " modificado correctamente!")
 
+                from interfaces.principalAdmin import PrincipalAdmin
+                frame = PrincipalAdmin(self.master)
+                self.frame.destroy()
+            else:
+                tkinter.messagebox.showinfo("Terranova gestión de usuarios",
+                    "Los campos no pueden estar vacios")
+        else:
+            tkinter.messagebox.showinfo("Terranova gestión de usuarios",
+                "El usuario " + user + " no del que esta modificando datos!")
 
-        insert = Usuario().update_user(name, surname, user, role, cargo)
-        tkinter.messagebox.showinfo("Terranova gestión de usuarios",
-            "El usuario " + user + " modificado correctamente!")
-
-        from interfaces.principalAdmin import PrincipalAdmin
-        frame = PrincipalAdmin(self.master)
-        self.frame.destroy()
-
-    def reset():
+    def reset(self):
         self.nombre.set("")
         self.apellido.set("")
-        self.usuario.set("")
+        self.usuario.set("Seleciona usuario")
         self.role.set("USER_ROLE")
         self.cargo.set("")
-        self.password.set("")
         self.TxtNombre.focus()
 
     def back_system(self):
