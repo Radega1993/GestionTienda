@@ -12,12 +12,11 @@ class Inventario(object):
         self.client = MongoDB()._db.productos
 
 
-    def add_product(self, nombre, categoria, subcategoria, precio, cantidad):
+    def add_product(self, nombre, categoria, precio, cantidad):
 
         new_product = {
             "nombre": nombre,
             "categoria": categoria,
-            "subcategoria": subcategoria,
             "precio": precio,
             "cantidad": cantidad
         }
@@ -42,16 +41,16 @@ class Inventario(object):
 
     def find_all(self):
 
+        all_products = []
         for product in self.client.find():
-            pprint(product)
+            all_products.append(product)
+        return all_products
 
-
-    def update_product(self, nombre, categoria, subcategoria, precio, cantidad):
+    def update_product(self, nombre, categoria, precio, cantidad):
 
         update_product = {
             "nombre": nombre,
             "categoria": categoria,
-            "subcategoria": subcategoria,
             "precio": precio,
             "cantidad": cantidad
         }

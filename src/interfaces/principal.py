@@ -2,7 +2,7 @@ from tkinter import *
 import tkinter.messagebox
 from tkinter import ttk
 
-from  interfaces.inventario import Invetario
+
 
 
 class Principal:
@@ -39,6 +39,10 @@ class Principal:
                 width = 17, font =('arial', 20, 'bold'), command = self.cobro_window)
         self.btnAddUsers.grid(row = 0, column = 1, padx = 10)
 
+        self.btnAddUsers = Button(self.barFrame, text = "Añadir producto",
+                width = 17, font =('arial', 20, 'bold'), command = self.add_product_window)
+        self.btnAddUsers.grid(row = 0, column = 2, padx = 10)
+
     def footer(self):
         self.LogoutFrame = Frame(self.frame, width=1000, height=100, bd = 20,
                                 relief='ridge')
@@ -52,6 +56,11 @@ class Principal:
     def cobro_window(self):
         from interfaces.cobroInterface import CobroInterface
         frame = CobroInterface(self.master)
+        self.frame.destroy()
+
+    def add_product_window(self):
+        from  interfaces.addProducto import AddProducto
+        frame = AddProducto(self.master)
         self.frame.destroy()
 
     def logout_system(self):

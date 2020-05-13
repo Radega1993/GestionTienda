@@ -2,7 +2,7 @@ from tkinter import *
 import tkinter.messagebox
 from tkinter import ttk
 
-from classes.usuario import Usuario
+from classes.inventario import Inventario
 
 
 class CobroInterface:
@@ -115,13 +115,13 @@ class CobroInterface:
 
         ############################ TABLA #####################################
 
-        # create Treeview with 3 columns
         cols = ('categoria', 'Nombre', 'Precio')
         self.listBox = ttk.Treeview(self.productFrame, columns=cols, show='headings')
         # set column headings
         for col in cols:
             self.listBox.heading(col, text=col)
-        self.listBox.grid(row=2, column=0, columnspan= 2)
+        data_products = self.fill_table()
+        self.listBox.grid(row=2, column=0, columnspan= 2, pady = 15)
 
 
     def cuenta(self):
@@ -148,8 +148,10 @@ class CobroInterface:
         pass
 
     def fill_table(self):
-        for i, (name, score) in enumerate(tempList):
-            listBox.insert("", "end", values=(i, name, score))
+
+        all_products = Inventario().find_all()
+        for product in all_products:
+            self.listBox.insert("", "end", values=(product['categoria'], product['nombre'], product['precio']))
 
     ############################ FOOTER ########################################
     def back_system(self):
