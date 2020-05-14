@@ -15,6 +15,10 @@ class AddProducto:
         self.frame = Frame(self.master)
         self.frame.pack()
 
+        product = self.add_frame_product()
+
+
+    def add_frame_product(self):
         ################# VAR FORM #############################################
         self.nombre = StringVar()
         self.categoria = StringVar()
@@ -31,7 +35,7 @@ class AddProducto:
         self.AddFrame1.grid(row=1, column=0)
         self.AddFrame2 = Frame(self.frame, width=1000, height=100, bd = 20,
                                 relief='ridge')
-        self.AddFrame2.grid(row=2, column=0)
+        self.AddFrame2.grid(row=3, column=0)
 
         ######################## TEXT LOGIN ####################################
 
@@ -48,9 +52,17 @@ class AddProducto:
         self.LblCategoria.grid(row = 3, column = 0)
         self.comboCategoria = ttk.Combobox(self.AddFrame1, font = ('arial', 20, 'bold'),
             textvariable=self.categoria, state = "readonly")
-        self.comboCategoria['values']= ("Bebida", "Comida")
+
+        all_categories = Inventario().find_category()
+        list_categories = [category['nombre'] for category in all_categories]
+        self.comboCategoria['values']= list_categories
         self.comboCategoria.set("Selecciona categoria")
         self.comboCategoria.grid(row = 3, column = 1)
+
+
+        self.btnCrear = Button(self.AddFrame1, text = "Crear categoría", width = 17,
+                        font =('arial', 20, 'bold'), command = self.add_category)
+        self.btnCrear.grid(row = 3, column = 2)
 
 
         self.LblPrecio = Label(self.AddFrame1, text = "Precio",
@@ -71,7 +83,7 @@ class AddProducto:
 
         ######################### BOTONES ######################################
 
-        self.btnCrear = Button(self.AddFrame2, text = "Crear", width = 17,
+        self.btnCrear = Button(self.AddFrame2, text = "Añadir", width = 17,
                         font =('arial', 20, 'bold'), command = self.add_producto)
         self.btnCrear.grid(row = 0, column = 0)
 
@@ -110,6 +122,49 @@ class AddProducto:
         else:
             tkinter.messagebox.showinfo("Terranova gestión de productos",
                 "El producto " + name + " ya existe")
+
+            self.reset()
+
+    def add_category(self):
+
+        self.nombrecat = StringVar()
+
+        self.CategoryFrame3 = Frame(self.frame, width=1000, height=100, bd = 20,
+                                relief='ridge')
+        self.CategoryFrame3.grid(row=2, column=0)
+
+        self.LblNombre = Label(self.CategoryFrame3, text = "Nombre",
+                                font = ('arial', 20, 'bold'), bd=5)
+        self.LblNombre.grid(row = 0, column = 0)
+        self.TxtNombre = Entry(self.CategoryFrame3,
+                    font = ('arial', 20, 'bold'), bd=5, textvariable=self.nombrecat)
+        self.TxtNombre.grid(row = 0, column = 1)
+
+        self.btnCrear = Button(self.CategoryFrame3, text = "Crear categoría", width = 17,
+                        font =('arial', 20, 'bold'), command = self.save_category)
+        self.btnCrear.grid(row = 0, column = 2)
+
+    def save_category(self):
+
+        nombre = (self.nombrecat.get())
+
+        name_find = Inventario().find_category_by_name(nombre)
+
+        if (name_find == None):
+            if len(nombre) != 0:
+                insert = Inventario().add_category(nombre)
+                tkinter.messagebox.showinfo("Terranova gestión de productos",
+                    "La categoría " + nombre + " añadida correctamente!")
+
+                #refresh page
+                self.add_frame_product()
+
+            else:
+                tkinter.messagebox.showinfo("Terranova gestión de productos",
+                    "No dejes campos en blanco!")
+        else:
+            tkinter.messagebox.showinfo("Terranova gestión de productos",
+                "La categoría " + nombre + " ya existe")
 
             self.reset()
 

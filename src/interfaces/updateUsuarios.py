@@ -26,7 +26,7 @@ class UpdateUsuarios:
         self.cargo = StringVar()
         self.current =  StringVar()
 
-        self.LabelTitle = Label(self.frame, text = "Crear Usuario",
+        self.LabelTitle = Label(self.frame, text = "Modificar Usuario",
                                 font = ('arial', 50, 'bold'), bd=20)
         self.LabelTitle.grid(row = 0, column = 0, columnspan = 2, pady = 20)
 
