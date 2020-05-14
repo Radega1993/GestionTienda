@@ -2,9 +2,9 @@ from tkinter import *
 import tkinter.messagebox
 from tkinter import ttk
 
-from interfaces.addUsuarios import AddUsuarios
-from interfaces.updateUsuarios import UpdateUsuarios
-from interfaces.deleteUsuarios import DeleteUsuarios
+from interfaces.usuario.addUsuarios import AddUsuarios
+from interfaces.usuario.updateUsuarios import UpdateUsuarios
+from interfaces.usuario.deleteUsuarios import DeleteUsuarios
 
 
 class PrincipalAdmin:

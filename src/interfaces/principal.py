@@ -81,27 +81,27 @@ class Principal:
         self.btnAddUsers.grid(row = 0, column = 0, padx = 10)
 
     def cobro_window(self):
-        from interfaces.cobroInterface import CobroInterface
+        from interfaces.bar.cobroInterface import CobroInterface
         frame = CobroInterface(self.master)
         self.frame.destroy()
 
     def add_product_window(self):
-        from  interfaces.addProducto import AddProducto
+        from  interfaces.inventario.addProducto import AddProducto
         frame = AddProducto(self.master)
         self.frame.destroy()
 
     def update_product_window(self):
-        from  interfaces.updateProducto import UpdateProducto
+        from  interfaces.inventario.updateProducto import UpdateProducto
         frame = UpdateProducto(self.master)
         self.frame.destroy()
 
     def del_product_window(self):
-        from  interfaces.delProducto import DelProducto
+        from  interfaces.inventario.delProducto import DelProducto
         frame = DelProducto(self.master)
         self.frame.destroy()
 
     def delete_category_window(self):
-        from  interfaces.deleteCategory import DeleteCategory
+        from  interfaces.inventario.deleteCategory import DeleteCategory
         frame = DeleteCategory(self.master)
         self.frame.destroy()
 
